@@ -1,10 +1,10 @@
 const awilix = require('awilix');
 const express = require('express');
-const makeFluentExpress = require('./util/fluent-express');
-const makeAuthorService = require('./author/author.service');
-const makeAuthorController = require('./author/author.controller');
-const makeBookService = require('./book/book.service');
-const makeBookController = require('./book/book.controller');
+const makeFluentExpress = require('./util/fluentExpress');
+const makeAuthorService = require('./services/authorService');
+const makeAuthorController = require('./controllers/authorController');
+const makeBookService = require('./services/bookService');
+const makeBookController = require('./controllers/bookController');
 const makeApp = require('./app');
 
 // Set Config

@@ -1,4 +1,4 @@
-const makeBookController = require('../../src/book/book.controller');
+const makeBookController = require('../../src/controllers/bookController');
 
 describe('makeBookController()', () => {
   let bookServiceStub;
