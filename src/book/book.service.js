@@ -1,4 +1,4 @@
-function BookService() {
+function makeBookService() {
   const books = [
     { id: '1', title: 'A Farewell to Arms', author: 'Ernest Hemingway' },
     { id: '2', title: 'American Psycho', author: 'Brett Easton Ellis' },
@@ -19,4 +19,4 @@ function BookService() {
   };
 }
 
-module.exports = BookService;
+module.exports = makeBookService;

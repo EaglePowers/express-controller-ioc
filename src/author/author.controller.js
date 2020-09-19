@@ -1,4 +1,4 @@
-function AuthorController(authorService) {
+function makeAuthorController({ authorService }) {
   function findById(req, res) {
     return res.send(authorService.findById(req.params.id));
   }
@@ -8,4 +8,4 @@ function AuthorController(authorService) {
   };
 }
 
-module.exports = AuthorController;
+module.exports = makeAuthorController;

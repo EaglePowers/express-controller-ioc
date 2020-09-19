@@ -1,44 +1,38 @@
+const awilix = require('awilix');
 const express = require('express');
-const FluentExpress = require('./util/fluent-express');
-const AuthorService = require('./author/author.service');
-const AuthorController = require('./author/author.controller');
-const BookService = require('./book/book.service');
-const BookController = require('./book/book.controller');
+const makeFluentExpress = require('./util/fluent-express');
+const makeAuthorService = require('./author/author.service');
+const makeAuthorController = require('./author/author.controller');
+const makeBookService = require('./book/book.service');
+const makeBookController = require('./book/book.controller');
+const makeApp = require('./app');
 
 // Set Config
 require('dotenv').config();
 port = process.env.PORT || 3000;
 
-// Create instances and wire up
-const authorService = AuthorService();
-const authorController = AuthorController(authorService);
-const bookService = BookService();
-const bookController = BookController(bookService);
-
-// Create app and configure routes using FluentExpress wrapper
-const { App, Router } = FluentExpress(express);
-// prettier-ignore
-const app = App()
-  .use(
-    '/books', 
-    Router()
-      .get('/', bookController.findAll)
-      .get('/:id', bookController.findById)
-  )
-  .use(
-    '/authors', 
-    Router()
-      .get('/:id', authorController.findById)
-  );
-
-// Unwrap to normal express app
-// Would really only be needed when the return value of
-// one of the FLUENT_METHODS in fluent-express.js is needed.
-// Maybe this isn't even needed - need to check the api.
-const expressApp = app.unwrap();
-expressApp.get('/hello', (req, res) => {
-  res.send('world');
+// Create container and register components
+const container = awilix.createContainer({
+  injectionMode: awilix.InjectionMode.PROXY,
 });
+
+container.register({
+  // Libraries
+  express: awilix.asValue(express),
+  fluentExpress: awilix.asFunction(makeFluentExpress),
+
+  // Services and Controllers
+  authorService: awilix.asFunction(makeAuthorService),
+  authorController: awilix.asFunction(makeAuthorController),
+  bookService: awilix.asFunction(makeBookService),
+  bookController: awilix.asFunction(makeBookController),
+
+  // App
+  app: awilix.asFunction(makeApp),
+});
+
+// Resolve and run app
+const app = container.resolve('app');
 
 app.listen(port);
 console.log(`listening on port ${port}`);

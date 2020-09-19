@@ -1,4 +1,4 @@
-function BookController(bookService) {
+function makeBookController({ bookService }) {
   function findAll(req, res) {
     res.send(bookService.findAll());
   }
@@ -13,4 +13,4 @@ function BookController(bookService) {
   };
 }
 
-module.exports = BookController;
+module.exports = makeBookController;

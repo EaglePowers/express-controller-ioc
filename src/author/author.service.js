@@ -1,4 +1,4 @@
-function AuthorService() {
+function makeAuthorService() {
   const authors = [
     { id: '1', name: 'Ernest Hemingway' },
     { id: '2', name: 'Brett Easton Ellis' },
@@ -16,4 +16,4 @@ function AuthorService() {
   };
 }
 
-module.exports = AuthorService;
+module.exports = makeAuthorService;

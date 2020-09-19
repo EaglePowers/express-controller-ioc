@@ -1,6 +1,6 @@
-const BookController = require('../../src/book/book.controller');
+const makeBookController = require('../../src/book/book.controller');
 
-describe('BookController()', () => {
+describe('makeBookController()', () => {
   let bookServiceStub;
   let controller;
 
@@ -10,7 +10,7 @@ describe('BookController()', () => {
       findById: jasmine.createSpy(),
     };
 
-    controller = BookController(bookServiceStub);
+    controller = makeBookController({ bookService: bookServiceStub });
   });
 
   it('findAll retrieves all books from bookService', () => {

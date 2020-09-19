@@ -8,7 +8,7 @@ const FLUENT_METHODS = ['use', 'get', 'put', 'post', 'delete', 'all'];
  *
  * @param {*} express
  */
-function FluentExpress(express) {
+function makeFluentExpress({ express }) {
   function makeFluent(router) {
     const routerProxy = new Proxy(router, {
       get: (target, prop) => {
@@ -46,4 +46,4 @@ function FluentExpress(express) {
   };
 }
 
-module.exports = FluentExpress;
+module.exports = makeFluentExpress;
