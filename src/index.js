@@ -33,5 +33,5 @@ builderApp.listen(builderPort);
 console.log(`builder app listening on port ${builderPort}`);
 
 const fluentApp = container.resolve('fluentApp');
-builderApp.listen(fluentPort);
+fluentApp.listen(fluentPort);
 console.log(`fluent app listening on port ${fluentPort}`);
