@@ -1,4 +1,4 @@
-function makeApp({ fluentExpress, bookController, authorController }) {
+function makeFluentApp({ fluentExpress, bookController, authorController }) {
   const { App, Router } = fluentExpress;
 
   // prettier-ignore
@@ -19,4 +19,4 @@ function makeApp({ fluentExpress, bookController, authorController }) {
   return app.unwrap();
 }
 
-module.exports = makeApp;
+module.exports = makeFluentApp;

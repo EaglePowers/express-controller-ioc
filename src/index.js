@@ -5,12 +5,13 @@ const {
   InjectionMode,
 } = require('awilix');
 const express = require('express');
-const makeFluentExpress = require('./util/fluentExpress');
-const makeApp = require('./app');
+const makeFluentApp = require('./fluentApp');
+const makeBuilderApp = require('./builderApp');
 
 // Set Config
 require('dotenv').config();
-port = process.env.PORT || 3000;
+const builderPort = process.env.BUILDER_PORT || 3000;
+const fluentPort = process.env.FLUENT_PORT || 3001;
 
 // Create container and register components
 const container = createContainer({
@@ -18,16 +19,19 @@ const container = createContainer({
 })
   .register({
     express: asValue(express),
-    fluentExpress: asFunction(makeFluentExpress),
-    app: asFunction(makeApp),
+    fluentApp: asFunction(makeFluentApp),
+    builderApp: asFunction(makeBuilderApp),
   })
-  .loadModules(['services/*.js', 'controllers/*.js'], {
+  .loadModules(['services/*.js', 'controllers/*.js', 'util/*.js'], {
     formatName: 'camelCase',
     cwd: __dirname,
   });
 
-// Resolve and run app
-const app = container.resolve('app');
+// Resolve and builder based and fluent based apps and listen
+const builderApp = container.resolve('builderApp');
+builderApp.listen(builderPort);
+console.log(`builder app listening on port ${builderPort}`);
 
-app.listen(port);
-console.log(`listening on port ${port}`);
+const fluentApp = container.resolve('fluentApp');
+builderApp.listen(fluentPort);
+console.log(`fluent app listening on port ${fluentPort}`);
