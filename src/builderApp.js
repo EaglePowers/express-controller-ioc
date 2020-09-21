@@ -18,7 +18,7 @@ function makeBuilderApp({ expressBuilder, bookController, authorController }) {
     },
   ];
 
-  const app = expressBuilder.build(appConfig);
+  const app = expressBuilder.buildApp(appConfig);
 
   return app;
 }

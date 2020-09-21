@@ -1,10 +1,18 @@
 function expressBuilder({ express }) {
-  function build(config) {
+  function buildApp(config) {
     const app = express();
 
     processCalls(app, config);
 
     return app;
+  }
+
+  function buildRouter(config) {
+    const router = express.Router();
+
+    processCalls(router, config);
+
+    return router;
   }
 
   function processCalls(router, config) {
@@ -34,7 +42,8 @@ function expressBuilder({ express }) {
   }
 
   return {
-    build,
+    buildApp,
+    buildRouter,
   };
 }
 
