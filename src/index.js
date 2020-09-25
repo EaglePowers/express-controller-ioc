@@ -5,13 +5,17 @@ const {
   InjectionMode,
 } = require('awilix');
 const express = require('express');
-const makeFluentApp = require('./fluentApp');
-const makeBuilderApp = require('./builderApp');
+const makeApp = require('./app');
+const makeAuthorController = require('./controllers/authorController');
+const makeBookController = require('./controllers/bookController');
+const makeAuthorRouter = require('./routers/authorRouter');
+const makeBookRouter = require('./routers/bookRouter');
+const makeAuthorService = require('./services/authorService');
+const makeBookService = require('./services/bookService');
 
 // Set Config
 require('dotenv').config();
-const builderPort = process.env.BUILDER_PORT || 3000;
-const fluentPort = process.env.FLUENT_PORT || 3001;
+const port = process.env.PORT || 3000;
 
 // Create container and register components
 const container = createContainer({
@@ -19,19 +23,20 @@ const container = createContainer({
 })
   .register({
     express: asValue(express),
-    fluentApp: asFunction(makeFluentApp),
-    builderApp: asFunction(makeBuilderApp),
+    app: asFunction(makeApp),
+    // bookService: asFunction(makeBookService),
+    // bookController: asFunction(makeBookController),
+    // bookRouter: asFunction(makeBookRouter),
+    // authorService: asFunction(makeAuthorService),
+    // authorController: asFunction(makeAuthorController),
+    // authorRouter: asFunction(makeAuthorRouter)
   })
-  .loadModules(['services/*.js', 'controllers/*.js', 'util/*.js'], {
+  .loadModules(['services/*.js', 'controllers/*.js', 'routers/*.js', 'util/*.js'], {
     formatName: 'camelCase',
     cwd: __dirname,
   });
 
 // Resolve and builder based and fluent based apps and listen
-const builderApp = container.resolve('builderApp');
-builderApp.listen(builderPort);
-console.log(`builder app listening on port ${builderPort}`);
-
-const fluentApp = container.resolve('fluentApp');
-fluentApp.listen(fluentPort);
-console.log(`fluent app listening on port ${fluentPort}`);
+const builderApp = container.resolve('app');
+builderApp.listen(port);
+console.log(`app listening on port ${port}`);

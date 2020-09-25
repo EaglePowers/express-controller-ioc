@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "strict": true,
+    "noEmit": true,
+    "lib": ["es2018"],
+    "target": "es2018"
+  },
+  "include": ["./src/**/*.js", "./src/typings.d.ts", "./spec/**/*.js"],
+  "exclude": ["./node_modules/**"],
+  "compileOnSave": true
+}
